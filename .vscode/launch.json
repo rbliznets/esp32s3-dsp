@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "cppdbg",
+      "name": "Esp32 OpenOCD",
+      "request": "launch",
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/esp32/.espressif/tools/xtensa-esp32s3-elf/esp-2022r1-11.2.0/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gdb.exe",
+      "program": "${workspaceFolder}/build/${command:espIdf.getProjectName}.elf",
+      "cwd": "${workspaceFolder}",
+      "environment": [{ "name": "PATH", "value": "${config:idf.customExtraPaths}" }],
+      "setupCommands": [
+        { "text": "target remote 127.0.0.1:3333" },
+        { "text": "set remote hardware-watchpoint-limit 2"},
+        { "text": "mon reset halt" },
+        { "text": "thb app_main" },
+        { "text": "flushregs" }
+      ],
+      "externalConsole": false,
+      "logging": {
+        "engineLogging": true
+      }
+    }
+  ]
+}
