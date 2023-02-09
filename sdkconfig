@@ -406,6 +406,12 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
+# mathlib_s3
+#
+CONFIG_CHECK_PARAM=y
+# end of mathlib_s3
+
+#
 # Compiler options
 #
 CONFIG_COMPILER_OPTIMIZATION_DEFAULT=y
