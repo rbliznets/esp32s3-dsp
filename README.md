@@ -1,5 +1,6 @@
 # esp32s3-dsp
 
+```
 This is esp32s3 chip with 2 CPU core(s), WiFi/BLE, silicon revision 1, Minimum free heap size: 380832 bytes
 
 **** Data size 1016 *****
@@ -16,3 +17,4 @@ scaleVector_c(1000): 69usec
 dot_product_16_16(1000): 2650nsec
 dot_product_1_16(1000): 3462nsec
 dot_product_c(1000): 57usec
+```
