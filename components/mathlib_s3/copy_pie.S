@@ -1,7 +1,7 @@
-   .text
+    .text
+    .type   copy_pie,@function
     .align  4
     .global copy_pie
-    .type   copy_pie,@function
 copy_pie: 
 // in   - a2
 // out   - a3
@@ -19,11 +19,11 @@ copy_pie:
     .loop_end_copy_pie:
 
     retw.n
-
+/////////////////////////////////////////////////////////////////////////////////
     .text
+    .type   copy_16_pie,@function
     .align  4
     .global copy_16_pie
-    .type   copy_16_pie,@function
 copy_16_pie: 
 // in   - a2
 // out   - a3

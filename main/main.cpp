@@ -55,19 +55,9 @@ void printTime(const char* str, uint32_t n=1)
     }
 }
 
-
-q15 dot_product(q15* din1, q15* din2, uint32_t size)
-{
-    int32_t sum=0;
-    for (uint32_t i = 0; i < size; i++)
-    {
-        sum += ((int32_t)din1[i])*din2[i];
-    }
-    return (q15)(sum >> 15);
-}
-
 void test_copy();
 void test_scalevector();
+void test_dotproduct();
 
 extern "C" void app_main(void)
 {
@@ -83,31 +73,9 @@ extern "C" void app_main(void)
 #ifdef CONFIG_CHECK_PARAM
     std::printf("CONFIG_CHECK_PARAM enable\n");
 #endif 
+    std::printf("\n");
 
-    getTime();
     test_copy();
     test_scalevector();
-    // for(int16_t i=0; i < countof(in1); i++)
-    // {
-    //     in1[i]=toQ15(0.5);
-    // }
-    // q15 k=toQ15(-0.5);
-    // scaleVectors(in1, &k, out, countof(in1));
-    // std::printf("scaleVectors result: %f\n",toFloat(out[0]));
-
-    // for (size_t i = 0; i < 128; i++)
-    // {
-    //   in1[i]=toQ15(0.5)/2;
-    //   in2[i]=toQ15(0.5)/2;
-    // }
-    // std::printf("dot_product_q15 result: %f\n",toFloat(dot_product_q15(in1,in2,8)));
-    // std::printf("dot_product result: %f\n",toFloat(dot_product(in1,in2,8)));
-    // std::printf("dot_product_q15 result: %f\n",toFloat(dot_product_q15(in1,in2,16)));
-    // std::printf("dot_product result: %f\n",toFloat(dot_product(in1,in2,16)));
-    // std::printf("dot_product_q15 result: %f\n",toFloat(dot_product_q15(in1,in2,32)));
-    // std::printf("dot_product result: %f\n",toFloat(dot_product(in1,in2,32)));
-    // std::printf("dot_product_q15 result: %f\n",toFloat(dot_product_q15(in1,in2,128)));
-    // std::printf("dot_product result: %f\n",toFloat(dot_product(in1,in2,128)));
-
-
+    test_dotproduct();
 }

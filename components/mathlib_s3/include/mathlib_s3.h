@@ -20,9 +20,9 @@ typedef __attribute__((aligned(4))) struct complex_q15{
 /// Copy vector.
 /*!
     out=in
-    \param[in] in vector (16 bytes aligned).
-    \param[out] out output vector.
-    \param[in] size vector size (multiple of 8).
+    \param[in] in vector.
+    \param[out] out output vector (16 bytes aligned).
+    \param[in] size vector size (multiple of 8, >= 8).
 */
 void copy(q15* in, q15* out, uint32_t size);
 /// Copy vector.
@@ -30,7 +30,7 @@ void copy(q15* in, q15* out, uint32_t size);
     out=in
     \param[in] in vector (16 bytes aligned).
     \param[out] out output vector (16 bytes aligned).
-    \param[in] size vector size (multiple of 8).
+    \param[in] size vector size (multiple of 8, >= 8).
 */
 void copy_16(q15* in, q15* out, uint32_t size);
 
@@ -40,17 +40,17 @@ void copy_16(q15* in, q15* out, uint32_t size);
     \param[in] in vector (16 bytes aligned).
     \param[in] k pointer for scalar (2 bytes aligned).
     \param[out] out output vector (16 bytes aligned).
-    \param[in] size vector size (multiple of 8).
+    \param[in] size vector size (multiple of 8, >= 8).
 */
 void scaleVector_16(q15* in, q15* k, q15* out, uint32_t size);
 
 /// Multiply vector by scalar.
 /*!
     out=in1 * k
-    \param[in] in vector (2 bytes aligned).
+    \param[in] in vector.
     \param[in] k pointer for scalar (2 bytes aligned).
     \param[out] out output vector (16 bytes aligned).
-    \param[in] size vector size (multiple of 8).
+    \param[in] size vector size (multiple of 8, >= 16).
 */
 void scaleVector(q15* in, q15* k, q15* out, uint32_t size);
 
@@ -58,10 +58,28 @@ void scaleVector(q15* in, q15* k, q15* out, uint32_t size);
 /*!
     \param[in] in1 vector (16 bytes aligned).
     \param[in] in2 vector (16 bytes aligned).
-    \param[in] size vector size (multiple of 8).
+    \param[in] size vector size (multiple of 8, >= 8).
     \return result
 */
-q15 dot_product_q15(q15* in1, q15* in2, uint32_t size);
+q15 dot_product_16_16(q15* in1, q15* in2, uint32_t size);
+/// Dot product of vectors q15.
+/*!
+    \param[in] in1 vector.
+    \param[in] in2 vector (16 bytes aligned).
+    \param[in] size vector size (multiple of 8, >= 8).
+    \return result
+*/
+q15 dot_product_1_16(q15* in1, q15* in2, uint32_t size);
+/// FIR q15.
+/*!
+    \param[in] in data.
+    \param[in] k coefficients (16 bytes aligned).
+    \param[in] ksize size of coefficients (multiple of 8, >= 8).
+    \param[out] out output vector.
+    \param[in] size vector size.
+*/
+void fir_1_16(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
+
 
 #ifdef __cplusplus
 }
