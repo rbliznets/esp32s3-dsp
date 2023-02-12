@@ -1,4 +1,5 @@
-idf_component_register(SRCS "fir_q15_pe.S" "normalize_q15_pie.S" 
+idf_component_register(SRCS "fir_16_16_q15_pie.S" 
+                    "normalize_q15_pie.S" 
                     "magnitude_q15_pie.S" 
                     "addVectors_q15_pie.S" 
                     "dot_product_q15_pie.S" 

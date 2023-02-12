@@ -43,7 +43,8 @@ void test_dotproduct()
     }
     printTime("dot_product_c",ITER);
 
-    for(int i=0;i<3;i++)std::printf("%f ",toFloat(out[i]));
+    // for(int i=0;i<3;i++)std::printf("%f ",toFloat(out[i]));
+    // std::printf("\n");
 
     std::printf("\n");
 }

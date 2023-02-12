@@ -19,8 +19,8 @@ void test_copy()
     getTime();
     for(int i=0; i<ITER; i++)copy(&in1[3], out, TEST_SIZE-8);
     printTime("copy",ITER);
-    for(int i=0;i<10;i++)std::printf("%d ",out[i]);
-    std::printf(" ... %d %d\n",out[TEST_SIZE-9],out[TEST_SIZE-8]);
+    // for(int i=0;i<10;i++)std::printf("%d ",out[i]);
+    // std::printf(" ... %d %d\n",out[TEST_SIZE-9],out[TEST_SIZE-8]);
 
     getTime();
     for(int i=0; i<ITER; i++)std::memcpy(out,in1,(TEST_SIZE-8)*sizeof(q15));

@@ -27,8 +27,8 @@ void test_scalevector()
     getTime();
     for(int i=0; i<ITER; i++)scaleVector(&in1[3], &k, out, TEST_SIZE-8);
     printTime("scaleVector",ITER);
-    for(int i=0;i<10;i++)std::printf("%f ",toFloat(out[i]));
-    std::printf(" ... %f %f\n",toFloat(out[TEST_SIZE-9]),toFloat(out[TEST_SIZE-8]));
+    // for(int i=0;i<10;i++)std::printf("%f ",toFloat(out[i]));
+    // std::printf(" ... %f %f\n",toFloat(out[TEST_SIZE-9]),toFloat(out[TEST_SIZE-8]));
 
     getTime();
     for(int i=0; i<ITER; i++)scaleVector_c(in1, &k, out, TEST_SIZE-8);

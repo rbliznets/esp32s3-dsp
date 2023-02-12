@@ -66,8 +66,8 @@ extern "C" void app_main(void)
 {
     esp_chip_info_t chip_info;
     esp_chip_info(&chip_info);
-    std::printf("This is %s chip with %d CPU core(s), WiFi%s%s, ",
-            CONFIG_IDF_TARGET,
+    std::printf("This is %s (%dMHz) chip with %d CPU core(s), WiFi%s%s, ",
+            CONFIG_IDF_TARGET,CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ,
             chip_info.cores,
             (chip_info.features & CHIP_FEATURE_BT) ? "/BT" : "",
             (chip_info.features & CHIP_FEATURE_BLE) ? "/BLE" : "");
@@ -78,8 +78,8 @@ extern "C" void app_main(void)
 #endif 
     std::printf("\n");
 
-    // test_copy();
-    // test_scalevector();
-    // test_dotproduct();
+    test_copy();
+    test_scalevector();
+    test_dotproduct();
     test_fir();
 }
