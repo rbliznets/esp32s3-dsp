@@ -108,6 +108,16 @@ void magnitude_q15(complex_q15* in, q15* out, uint32_t size);
 */
 int16_t normalize_q15(q15* in, q15* out, uint32_t size);
 
+/// FIR q15.
+/*!
+    \param[in] in data vector.
+    \param[in] k coefficients.
+    \param[in] ksize size of coefficients.
+    \param[out] out output vector (16 bytes aligned).
+    \param[in] size vector size(multiple of 8, >= 8).
+*/
+void fir_q15(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
+
 
 #ifdef __cplusplus
 }

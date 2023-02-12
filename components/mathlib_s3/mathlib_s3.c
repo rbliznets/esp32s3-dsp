@@ -117,3 +117,14 @@ inline int16_t normalize_q15(q15* in, q15* out, uint32_t size)
 #endif 
     return normalize_q15_pie(in, out, size);
 }
+
+void fir_q15_pie(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
+inline void fir_q15(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size)
+{
+#ifdef CONFIG_CHECK_PARAM
+    assert(((uint32_t)out % 16) == 0);
+    assert((size % 8) == 0);
+    assert(size > 8);
+#endif 
+    fir_q15_pie(in, k, ksize, out, size);
+}

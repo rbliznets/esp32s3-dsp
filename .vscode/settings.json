@@ -7,8 +7,7 @@
     "idf.customExtraVars": "{\"OPENOCD_SCRIPTS\":\"C:\\\\esp32\\\\.espressif\\\\tools\\\\openocd-esp32\\\\v0.11.0-esp32-20221026/openocd-esp32/share/openocd/scripts\",\"IDF_CCACHE_ENABLE\":\"1\"}",
     "idf.espIdfPathWin": "C:\\esp32\\esp-idf",
     "idf.openOcdConfigs": [
-        "interface/ftdi/esp32_devkitj_v1.cfg",
-        "target/esp32s3.cfg"
+        "board/esp32s3-builtin.cfg"
     ],
     "idf.portWin": "COM14",
     "idf.enableIdfComponentManager": true,

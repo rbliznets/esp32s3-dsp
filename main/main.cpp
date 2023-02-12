@@ -13,6 +13,8 @@ __attribute__((aligned(16)))
 q15 in2[TEST_SIZE];
 __attribute__((aligned(16)))
 q15 out[TEST_SIZE];
+__attribute__((aligned(16)))
+q15 kgauss[24]={1,4,15,52,151,380,832,1579,2599,3710,4594,4933,4594,3710,2599,1579,832,380,151,52,15,4,1,0};
 
 int64_t mTime=0;
 
@@ -58,6 +60,7 @@ void printTime(const char* str, uint32_t n=1)
 void test_copy();
 void test_scalevector();
 void test_dotproduct();
+void test_fir();
 
 extern "C" void app_main(void)
 {
@@ -75,7 +78,8 @@ extern "C" void app_main(void)
 #endif 
     std::printf("\n");
 
-    test_copy();
-    test_scalevector();
-    test_dotproduct();
+    // test_copy();
+    // test_scalevector();
+    // test_dotproduct();
+    test_fir();
 }
