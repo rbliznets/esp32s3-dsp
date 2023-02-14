@@ -267,3 +267,55 @@ atan2_q15_s3:
     .end_atan2_q15_s3:
     mov.n a2,a6
     retw.n
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+    .type   arg_q15_pie,@function
+    .align  4
+    .global arg_q15_pie
+arg_q15_pie: 
+// in   - a2
+// out  - a3
+// size  - a4
+// tan - a5
+    entry	a1, 16
+
+    EE.VLD.128.IP q0, a2, 16
+    EE.VLD.128.IP q1, a2, 16
+    EE.VUNZIP.16 q0, q1         // x -> q0, y -> q1
+
+    EE.ZERO.Q q7
+    EE.ZERO.Q q6            // sum -> q6
+    EE.MOV.S16.QACC q0      // x-> QACC
+
+    MOVI.N a6, -1
+    MOVI.N a7, 0
+    EE.VRELU.S16 q0, a6, a7     // abs(x) -> q0
+
+    WSR.SAR a7
+    // step 0
+    EE.VCMP.LT.S16 q5, q1, q7  // neg y
+    EE.VCMP.GT.S16 q4, q1, q7  // pos y
+
+    // xn = x1 + y or xn = x1 - y
+    EE.VMUL.S16 q3, q1, q4 // pos -y
+    EE.VSUBS.S16 q2, q0, q3 // |x|-(-y) -> q2
+    EE.VMUL.S16 q3, q1, q5 // neg -y
+    EE.VADDS.S16 q2, q2, q3 // |x|+(-y) -> q2
+
+    // y = y - x1 or y = y + x1
+    EE.VMUL.S16 q3, q0, q4 // pos -|x|
+    EE.VADDS.S16 q1, q1, q3 // y = y + (-|x|); -> q1
+    EE.VMUL.S16 q3, q0, q5 // neg -|x|
+    EE.VSUBS.S16 q1, q1, q3 // y - (-|x|) -> q1
+    
+    EE.VADDS.S16 q0, q2, q7     // x1 = xn
+
+    //  sum += tan[0] or sum -= tan[0]
+    EE.VLDBC.16.IP q2, a5, 2   // q2 = 8{tan[0]}
+    EE.VMUL.S16 q4, q2, q4 // pos -tan[0]
+    EE.VSUBS.S16 q6, q6, q4 // sum = sum -(-tan[0])
+    EE.VMUL.S16 q5, q2, q5 // neg -tan[0]
+    EE.VADDS.S16 q6, q6, q6 // sum = sum +(-tan[0])
+
+    EE.VST.128.IP q6, a3, 16 //@@@@ debug step 0
+
+    retw.n

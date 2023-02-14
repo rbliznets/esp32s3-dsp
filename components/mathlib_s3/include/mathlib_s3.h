@@ -1,3 +1,12 @@
+/*!
+	\file
+	\brief Оптимизированные функции DSP.
+	\authors Близнец Р.А.
+	\version 0.3.0.0
+	\date 11.11.2022
+	\copyright (c) Copyright 2022, ООО "Глобал Ориент", Москва, Россия, https://github.com/Global-Orient/Gonets
+*/
+
 #pragma once
 #include <stdint.h>
 
@@ -9,12 +18,6 @@ extern "C"
 typedef int16_t q15; ///< fixed point S.15
 #define toQ15(f) ((q15)(f*INT16_MAX))
 #define toFloat(q) ((((int16_t)q))/((float)INT16_MAX))
-
-/// Complex number.
-typedef __attribute__((aligned(4))) struct complex_q15{
-    q15 re; ///< real
-    q15 im; ///< imagine
-} complex_q15;
 
 #define toQ15SIZE(size) (((size+7)/8)*8);
 
@@ -91,15 +94,6 @@ void fir_1_16(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
 */
 void addVectors_q15(q15* in1, q15* in2, q15* out, uint32_t size);
 
-/// The square magnitude of a complex vector divided by 2.
-/*!
-    out=(in.re^2 + in.im^2)/2
-    \param[in] in complex vector (16 bytes aligned).
-    \param[out] out magnitude (16 bytes aligned).
-    \param[in] size vector size (multiple of 8).
-*/
-void magnitude_q15(complex_q15* in, q15* out, uint32_t size);
-
 /// Normalize vector q15.
 /*!
     \param[in] in q15 vector (16 bytes aligned).
@@ -129,4 +123,3 @@ q15 atan2_q15(q15 y, q15 x);
 #ifdef __cplusplus
 }
 #endif
-

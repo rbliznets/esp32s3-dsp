@@ -1,3 +1,12 @@
+/*!
+	\file
+	\brief Оптимизированные функции DSP.
+	\authors Близнец Р.А.
+	\version 0.3.0.0
+	\date 11.11.2022
+	\copyright (c) Copyright 2022, ООО "Глобал Ориент", Москва, Россия, https://github.com/Global-Orient/Gonets
+*/
+
 #include <assert.h>
 #include "mathlib_s3.h"
 #include "sdkconfig.h"
@@ -92,18 +101,6 @@ inline void addVectors_q15(q15* in1, q15* in2, q15* out, uint32_t size)
     assert(size > 0);
 #endif 
     addVectors_q15_pie(in1, in2, out, size);
-}
-
-void magnitude_q15_pie(complex_q15* in, q15* out, uint32_t size);
-inline void magnitude_q15(complex_q15* in, q15* out, uint32_t size)
-{
-#ifdef CONFIG_CHECK_PARAM
-    assert(((uint32_t)in % 16) == 0);
-    assert(((uint32_t)out % 16) == 0);
-    assert((size % 8) == 0);
-    assert(size > 0);
-#endif 
-    magnitude_q15_pie(in, out, size);
 }
 
 int16_t normalize_q15_pie(q15* in, q15* out, uint32_t size);

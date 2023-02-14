@@ -3,6 +3,7 @@
 #include <cstdio>
 #include "esp_timer.h"
 #include "mathlib_s3.h"
+#include "complex_s3.h"
 #define countof(x) (sizeof(x)/sizeof(x[0]))
 
 #define ITER (1000)

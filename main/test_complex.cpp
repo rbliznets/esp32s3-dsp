@@ -39,8 +39,8 @@ void test_complex()
     getTime();
     for(int i=0; i<ITER; i++)
     {
-        angle_q15=atan2_q15(cx.im,cx.re);
+        angle_q15=arg(cx);
         cx.re++;
     }
-    printTime("atan2_q15",ITER);
+    printTime("arg",ITER);
 }
