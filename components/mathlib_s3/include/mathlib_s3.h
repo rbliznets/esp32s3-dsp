@@ -118,6 +118,13 @@ int16_t normalize_q15(q15* in, q15* out, uint32_t size);
 */
 void fir_16_16_q15(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
 
+/// atan2 q15.
+/*!
+    \param[in] y.
+    \param[in] x.
+    \return atan(y/x) in radians. (Pi = 16383)
+*/
+q15 atan2_q15(q15 y, q15 x);
 
 #ifdef __cplusplus
 }

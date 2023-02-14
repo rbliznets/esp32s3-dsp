@@ -1,4 +1,6 @@
-idf_component_register(SRCS "fir_16_16_q15_pie.S" 
+idf_component_register(SRCS "cordic_q15.c"
+                    "cordic_q15.S" 
+                    "fir_16_16_q15_pie.S" 
                     "normalize_q15_pie.S" 
                     "magnitude_q15_pie.S" 
                     "addVectors_q15_pie.S" 
