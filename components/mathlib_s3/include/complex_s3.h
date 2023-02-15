@@ -30,6 +30,14 @@ inline q15 arg(complex_q15 value)
     return atan2_q15(value.im, value.re);
 };
 
+/// argument.
+/*!
+    \param[in] complex vector (16 bytes aligned)..
+    \param[out] out magnitude (16 bytes aligned).
+    \param[in] size vector size (multiple of 8).
+*/
+void arg_q15(complex_q15* in, q15* out, uint32_t size);
+
 /// The square magnitude of a complex vector divided by 2.
 /*!
     out=(in.re^2 + in.im^2)/2

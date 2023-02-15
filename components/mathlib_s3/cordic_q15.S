@@ -277,45 +277,64 @@ arg_q15_pie:
 // size  - a4
 // tan - a5
     entry	a1, 16
+    MOVI.N a9, 13
+    MOVI.N a7, 0
+    MOVI.N a6, -1
+    EE.ZERO.Q q7
 
     EE.VLD.128.IP q0, a2, 16
     EE.VLD.128.IP q1, a2, 16
     EE.VUNZIP.16 q0, q1         // x -> q0, y -> q1
-
-    EE.ZERO.Q q7
     EE.ZERO.Q q6            // sum -> q6
     EE.MOV.S16.QACC q0      // x-> QACC
-
-    MOVI.N a6, -1
-    MOVI.N a7, 0
     EE.VRELU.S16 q0, a6, a7     // abs(x) -> q0
+    MOVI.N a8, 0
+    loopnez a9, .loop_cordic_end
+        // step 0
+        EE.VCMP.LT.S16 q5, q1, q7  // neg y
+        EE.VCMP.GT.S16 q4, q1, q7  // pos y
+        // xn = x1 + (y >> a8) or xn = x1 - (y >> a8)
+        WSR.SAR a8
+        EE.VMUL.S16 q3, q1, q4 // pos -y
+        EE.VSUBS.S16 q2, q0, q3 // |x|-(-y) -> q2
+        EE.VMUL.S16 q3, q1, q5 // neg -y
+        EE.VADDS.S16 q2, q2, q3 // |x|+(-y) -> q2
+        // y = y - (x1 >> a8) or y = y + (x1 >> a8)
+        EE.VMUL.S16 q3, q0, q4 // pos -|x|
+        EE.VADDS.S16 q1, q1, q3 // y = y + (-|x|); -> q1
+        EE.VMUL.S16 q3, q0, q5 // neg -|x|
+        EE.VSUBS.S16 q1, q1, q3 // y - (-|x|) -> q1
+        // x1 = xn
+        EE.VADDS.S16 q0, q2, q7     
+        //  sum += tan[a8] or sum -= tan[a8]
+        WSR.SAR a7
+        EE.VLDBC.16.IP q2, a5, 2   // q2 = 8{tan[a8]}
+        EE.VMUL.S16 q4, q2, q4 // pos -tan[a8]
+        EE.VSUBS.S16 q6, q6, q4 // sum = sum -(-tan[a8])
+        EE.VMUL.S16 q5, q2, q5 // neg -tan[a8]
+        EE.VADDS.S16 q6, q6, q5 // sum = sum +(-tan[a8])
 
-    WSR.SAR a7
-    // step 0
-    EE.VCMP.LT.S16 q5, q1, q7  // neg y
-    EE.VCMP.GT.S16 q4, q1, q7  // pos y
-
-    // xn = x1 + y or xn = x1 - y
-    EE.VMUL.S16 q3, q1, q4 // pos -y
-    EE.VSUBS.S16 q2, q0, q3 // |x|-(-y) -> q2
-    EE.VMUL.S16 q3, q1, q5 // neg -y
-    EE.VADDS.S16 q2, q2, q3 // |x|+(-y) -> q2
-
-    // y = y - x1 or y = y + x1
-    EE.VMUL.S16 q3, q0, q4 // pos -|x|
-    EE.VADDS.S16 q1, q1, q3 // y = y + (-|x|); -> q1
-    EE.VMUL.S16 q3, q0, q5 // neg -|x|
-    EE.VSUBS.S16 q1, q1, q3 // y - (-|x|) -> q1
+        ADDI.N a8,a8,1
+    .loop_cordic_end:
+EE.VST.128.IP q6, a3, 16 //@@@@ debug step 0
     
-    EE.VADDS.S16 q0, q2, q7     // x1 = xn
+    EE.SRCMB.S16.QACC q3, a7, 0 // x -> q3
+    EE.VCMP.LT.S16 q5, q3, q7  // neg x     -> q5
+    EE.VLDBC.16.IP q2, a5, 2          // -16383    -> q2
 
-    //  sum += tan[0] or sum -= tan[0]
-    EE.VLDBC.16.IP q2, a5, 2   // q2 = 8{tan[0]}
-    EE.VMUL.S16 q4, q2, q4 // pos -tan[0]
-    EE.VSUBS.S16 q6, q6, q4 // sum = sum -(-tan[0])
-    EE.VMUL.S16 q5, q2, q5 // neg -tan[0]
-    EE.VADDS.S16 q6, q6, q6 // sum = sum +(-tan[0])
-
-    EE.VST.128.IP q6, a3, 16 //@@@@ debug step 0
+    EE.VCMP.LT.S16 q4, q6, q7  // neg sum   -> q4
+    EE.VMUL.S16 q4, q2, q4      // erase and (-16383)
+    EE.VCMP.GT.S16 q3, q6, q7  // pos sum   -> q3
+    EE.VRELU.S16 q3, a6, a7    // -1 -> 1
+    EE.VMUL.S16 q3, q2, q3      // erase and (16383)
+    EE.VADDS.S16 q2, q6, q4 // sum = sum +(-tan[a8])
+    EE.VADDS.S16 q2, q2, q3 // sum = sum +(-tan[a8])
+    EE.VMUL.S16 q2, q5, q2      // erase and (-)
+//EE.VST.128.IP q2, a3, 16 //@@@@ debug step 0
+    EE.VLDBC.16 q3, a5          // 1   -> q3
+    EE.VADDS.S16 q5, q5, q3 
+    EE.VMUL.S16 q6, q6, q5      // erase sum
+    EE.VADDS.S16 q6, q6, q2 
+    EE.VST.128.IP q6, a3, 16 //save arqument
 
     retw.n

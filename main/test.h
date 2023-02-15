@@ -12,6 +12,7 @@
 extern q15 in1[TEST_SIZE];
 extern q15 in2[TEST_SIZE];
 extern q15 out[TEST_SIZE];
+extern complex_q15 inc[TEST_SIZE];
 extern q15 kgauss[24];
 
 int64_t getTime();
