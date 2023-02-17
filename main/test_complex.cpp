@@ -32,6 +32,8 @@ void test_complex()
         inc[8*i+7].re=0;
         inc[8*i+7].im=-100;
     }
+    inc[0].re=0;
+    inc[0].im=0;
     std::memset(out,0,sizeof(out));
     getTime();
     arg_16_q15(inc, out, TEST_SIZE-8);

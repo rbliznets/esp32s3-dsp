@@ -18,7 +18,7 @@ typedef int16_t q15; ///< fixed point S.15
 #define toQ15(f) ((q15)(f*INT16_MAX))
 #define toFloat(q) ((((int16_t)q))/((float)INT16_MAX))
 
-#define toQ15SIZE(size) (((size+7)/8)*8);
+#define to8SIZE(size) ((((size)+7)/8)*8)
 
 /// Copy vector.
 /*!
@@ -118,6 +118,16 @@ void fir_16_16_q15(q15* in, q15* k, uint32_t ksize, q15* out, uint32_t size);
     \return atan(y/x) in radians. (Pi = 16383)
 */
 q15 atan2_q15(q15 y, q15 x);
+
+/// atan q15.
+/*!
+    \param[in] y tangents.
+    \return atan(y) in radians. (Pi = 16383)
+*/
+inline q15 atan_q15(q15 y)
+{
+    return atan2_q15(y, 0x7fff);
+};
 
 #ifdef __cplusplus
 }
