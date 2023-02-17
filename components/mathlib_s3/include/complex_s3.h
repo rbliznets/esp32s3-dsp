@@ -4,7 +4,6 @@
 	\authors Близнец Р.А.
 	\version 0.3.0.0
 	\date 14.02.2023
-	\copyright (c) Copyright 2023, ООО "Глобал Ориент", Москва, Россия, https://github.com/Global-Orient/Gonets
 */
 
 #pragma once
@@ -36,7 +35,7 @@ inline q15 arg(complex_q15 value)
     \param[out] out magnitude (16 bytes aligned).
     \param[in] size vector size (multiple of 8).
 */
-void arg_q15(complex_q15* in, q15* out, uint32_t size);
+void arg_16_q15(complex_q15* in, q15* out, uint32_t size);
 
 /// The square magnitude of a complex vector divided by 2.
 /*!

@@ -10,7 +10,7 @@ inline int16_t arg_fr16(complex_q15& data)
 
 void test_complex()
 {
-   std::printf("**** Data size %d *****\n",TEST_SIZE);
+   std::printf("**** Data size %d *****\n",TEST_SIZE-8);
     
     for(int16_t i=0; i < TEST_SIZE/8; i++)
     {
@@ -22,29 +22,35 @@ void test_complex()
         inc[8*i+2].im=-100;
         inc[8*i+3].re=200;
         inc[8*i+3].im=-100;
+
         inc[8*i+4].re=0;
         inc[8*i+4].im=100;
         inc[8*i+5].re=200;
         inc[8*i+5].im=0;
-        inc[8*i+6].re=-100;
+        inc[8*i+6].re=-200;
         inc[8*i+6].im=0;
         inc[8*i+7].re=0;
-        inc[8*i+7].im=-0;
+        inc[8*i+7].im=-100;
     }
     std::memset(out,0,sizeof(out));
-    arg_q15(inc, out, TEST_SIZE);
-    for(int i=0;i<8;i++)std::printf("%d ",out[i]);
-    std::printf("\n");   
-    for(int i=8;i<16;i++)std::printf("%d ",out[i]);
-    std::printf("\n");   
-    for(int i=16;i<20;i++)std::printf("%d ",out[i]);
-    std::printf("\n");   
-    for(int i=24;i<28;i++)std::printf("%d ",out[i]);
-    std::printf("\n");   
-    for(int i=32;i<36;i++)std::printf("%d ",out[i]);
-    std::printf("\n");   
-    // std::printf("... %d %d\n",out[TEST_SIZE-2],out[TEST_SIZE-1]);   
+    getTime();
+    arg_16_q15(inc, out, TEST_SIZE-8);
+    printTime("arg_q15",1);
+    // for(int16_t k=0; k <6; k++)
+    // {
+    //     for(int i=k*8;i<(k*8)+8;i++)std::printf("%d\t",out[i]);
+    //     std::printf("\n");  
+    // } 
+    // std::printf(".. %d %d...%d\n",out[TEST_SIZE-9],out[TEST_SIZE-8],out[TEST_SIZE-1]);   
 
+    getTime();
+    for(int i=0; i<ITER; i++)
+    {
+        arg_16_q15(inc, out, TEST_SIZE-8);
+    }
+    printTime("arg_q15",ITER);
+
+    std::printf("**** Data size 1 *****\n");
     // std::printf("**** Data size 1 *****\n");
     complex_q15 cx = {-200, 100};
     std::complex<float> q={toFloat(cx.re),toFloat(cx.im)};
@@ -56,27 +62,29 @@ void test_complex()
     // std::printf("%d\n",angle_q15);
 
 
-    // getTime();
-    // for(int i=0; i<ITER; i++)
-    // {
-    //     angle = std::arg(q);
-    //     q+=1;
-    // }
-    // printTime("float std::arg",ITER);
+    getTime();
+    for(int i=0; i<ITER; i++)
+    {
+        angle = std::arg(q);
+        q+=1;
+    }
+    printTime("float std::arg",ITER);
 
-    // getTime();
-    // for(int i=0; i<ITER; i++)
-    // {
-    //     angle_q15=arg_fr16(cx);
-    //     cx.re++;
-    // }
-    // printTime("arg_fr16",ITER);
+    getTime();
+    for(int i=0; i<ITER; i++)
+    {
+        angle_q15=arg_fr16(cx);
+        cx.re++;
+    }
+    printTime("arg_fr16",ITER);
 
-    // getTime();
-    // for(int i=0; i<ITER; i++)
-    // {
-    //     angle_q15=arg(cx);
-    //     cx.re++;
-    // }
-    // printTime("arg",ITER);
+    getTime();
+    for(int i=0; i<ITER; i++)
+    {
+        angle_q15=arg(cx);
+        cx.re++;
+    }
+    printTime("arg",ITER);
+
+    std::printf("\n");
 }

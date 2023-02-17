@@ -4,7 +4,6 @@
 	\authors Близнец Р.А.
 	\version 0.3.0.0
 	\date 11.11.2022
-	\copyright (c) Copyright 2022, ООО "Глобал Ориент", Москва, Россия, https://github.com/Global-Orient/Gonets
 */
 
 #pragma once

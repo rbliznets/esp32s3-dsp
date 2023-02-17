@@ -3,7 +3,7 @@
 #include "complex_s3.h"
 #include "sdkconfig.h"
 
-static const q15 tan_array[15]={4095, 2417, 1277, 648, 325, 162, 81, 40, 20, 10, 4, 2, 1, -16383, 1};
+static const q15 tan_array[16]={4095, 2417, 1277, 648, 325, 162, 81, 40, 20, 10, 4, 2, 1, -16383, 1, 2};
 q15 atan2_q15_s3(q15 y, q15 x, const q15* tan);
 inline q15 atan2_q15(q15 y, q15 x)
 {
@@ -41,8 +41,8 @@ inline q15 atan2_q15(q15 y, q15 x)
     // return sum;
 }
 
-void arg_q15_pie(complex_q15* in, q15* out, uint32_t size, const q15* tan);
-inline void arg_q15(complex_q15* in, q15* out, uint32_t size)
+void arg_16_q15_pie(complex_q15* in, q15* out, uint32_t size, const q15* tan);
+inline void arg_16_q15(complex_q15* in, q15* out, uint32_t size)
 {
 #ifdef CONFIG_CHECK_PARAM
     assert(((uint32_t)in % 16) == 0);
@@ -50,5 +50,5 @@ inline void arg_q15(complex_q15* in, q15* out, uint32_t size)
     assert((size % 8) == 0);
     assert(size > 0);
 #endif 
-    arg_q15_pie(in, out, size, tan_array);
+    arg_16_q15_pie(in, out, size, tan_array);
 }

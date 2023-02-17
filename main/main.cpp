@@ -81,9 +81,9 @@ extern "C" void app_main(void)
 #endif 
     std::printf("\n");
 
-    // test_copy();
-    // test_scalevector();
-    // test_dotproduct();
-    // test_fir();
+    test_copy();
+    test_scalevector();
+    test_dotproduct();
+    test_fir();
     test_complex();
 }
