@@ -1,5 +1,7 @@
 # esp32s3-dsp
 
+idf 5.0.1
+
 ```
 This is esp32s3 (240MHz) chip with 2 CPU core(s), WiFi/BLE, silicon revision 1, Minimum free heap size: 375320 bytes
 
