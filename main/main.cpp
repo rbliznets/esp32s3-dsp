@@ -64,6 +64,7 @@ void test_scalevector();
 void test_dotproduct();
 void test_fir();
 void test_complex();
+void test_sincos();
 
 extern "C" void app_main(void)
 {
@@ -86,4 +87,5 @@ extern "C" void app_main(void)
     test_dotproduct();
     test_fir();
     test_complex();
+    test_sincos();
 }

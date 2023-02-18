@@ -52,3 +52,13 @@ inline void arg_16_q15(complex_q15* in, q15* out, uint32_t size)
 #endif 
     arg_16_q15_pie(in, out, size, tan_array);
 }
+
+void sincos_q15_s3(q15 angle, q15* cs, q15* sn, const q15* tan);
+inline void sincos_q15(q15 angle, q15* sn, q15* cs)
+{
+#ifdef CONFIG_CHECK_PARAM
+    assert(angle <= 16383);
+    assert(angle >= -16383);
+#endif 
+    sincos_q15_s3(angle, cs, sn, tan_array);
+}

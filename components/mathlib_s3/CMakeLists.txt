@@ -1,4 +1,6 @@
-idf_component_register(SRCS "complex_s3.c" "cordic_q15.c"
+idf_component_register(SRCS "arg_16_q15_pie.S" 
+                    "complex_s3.c" 
+                    "cordic_q15.c"
                     "cordic_q15.S" 
                     "fir_16_16_q15_pie.S" 
                     "dot_product_q15_pie.S" 

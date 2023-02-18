@@ -129,6 +129,14 @@ inline q15 atan_q15(q15 y)
     return atan2_q15(y, 0x7fff);
 };
 
+/// sin cos q15.
+/*!
+    \param[in] angle angle. (Pi = 16383)
+    \param[out] sn sinus.
+    \param[out] cs cosine.
+*/
+void sincos_q15(q15 angle, q15* sn, q15* cs);
+
 #ifdef __cplusplus
 }
 #endif

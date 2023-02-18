@@ -90,3 +90,32 @@ void test_complex()
 
     std::printf("\n");
 }
+
+void test_sincos()
+{
+    q15 sn,cs;
+    std::printf("**** Data size 1 *****\n");
+    // std::printf("\n");
+    // sincos_q15(16383/3, &sn, &cs);    
+    // std::printf("pi/3 -> %d,%d\n",sn,cs);
+    // std::printf("\n");
+    // sincos_q15(4095, &sn, &cs);    
+    // std::printf("pi/4 -> %d,%d\n",sn,cs);
+    // sincos_q15(4095+8191, &sn, &cs);    
+    // std::printf("3pi/4 -> %d,%d\n",sn,cs);
+    // sincos_q15(-4095-8191, &sn, &cs);    
+    // std::printf("-3pi/4 -> %d,%d\n",sn,cs);
+    // sincos_q15(-4095, &sn, &cs);    
+    // std::printf("-pi/4 -> %d,%d\n",sn,cs);
+
+    q15 angle=0;
+    getTime();
+    for(int i=0; i<ITER; i++)
+    {
+        sincos_q15(angle, &sn, &cs);
+        angle+=1;
+    }
+    printTime("sincos_q15",ITER);
+
+     std::printf("\n");
+}
