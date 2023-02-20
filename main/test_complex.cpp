@@ -10,7 +10,7 @@ inline int16_t arg_fr16(complex_q15& data)
 
 void test_complex()
 {
-   std::printf("**** Data size %d *****\n",TEST_SIZE-8);
+    std::printf("**** Data size %d *****\n",TEST_SIZE-8);
     
     for(int16_t i=0; i < TEST_SIZE/8; i++)
     {
@@ -54,14 +54,13 @@ void test_complex()
 
     std::printf("**** Data size 1 *****\n");
     // std::printf("**** Data size 1 *****\n");
-    complex_q15 cx = {-200, 100};
+    complex_q15 cx = {-200, 200};
     std::complex<float> q={toFloat(cx.re),toFloat(cx.im)};
     float angle = std::arg(q);
-    // float radius = std::abs(q);
-    // std::printf("%fe^%fi\n",radius,angle);
     q15 angle_q15=atan2_q15(cx.im,cx.re);
-    assert(angle_q15 == 13954);
+    assert(angle_q15 == 12287);
     // std::printf("%d\n",angle_q15);
+    // std::printf("%f ?= %f\n",angle, toFloatAngle(angle_q15));
 
 
     getTime();
@@ -108,6 +107,15 @@ void test_sincos()
     // sincos_q15(-4095, &sn, &cs);    
     // std::printf("-pi/4 -> %d,%d\n",sn,cs);
 
+    // float angle = -5*M_PI/4;
+    // q15 a = toQ15Angle(angle);
+    // float f1 = std::cos(angle);
+    // float f2 = std::sin(angle);
+    // sincos_q15(a, &sn, &cs);   
+    // std::printf("%f,  %d\n",angle, a);
+    // std::printf("%f ?= %f\n",f1, toFloat(cs));
+    // std::printf("%f ?= %f\n",f2, toFloat(sn));
+
     q15 angle=0;
     getTime();
     for(int i=0; i<ITER; i++)
@@ -117,5 +125,5 @@ void test_sincos()
     }
     printTime("sincos_q15",ITER);
 
-     std::printf("\n");
+    std::printf("\n");
 }

@@ -5,7 +5,10 @@
 	.literal	.MINUS_PI, -16383
 	.literal	.PLUS_PI2, 8191
 	.literal	.MINUS_PI2, -8191
-    .literal	.COS_FACTOR, 20860
+//    .literal	.COS_FACTOR, 20860
+    .literal	.COS_FACTOR, 19894
+	.literal	.SAT_MAX_16, 32767
+	.literal	.SAT_MIN_16, -32768
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
     .type   atan2_q15_s3,@function
     .align  4
@@ -254,7 +257,7 @@ atan2_q15_s3:
         // y >= 0
         add.n a6,a6,a8  // sum += tan[12]
     .atan2_step12_end:
-
+   
     bgez a3,.end_atan2_q15_s3
         // x < 0
         bgez a6,.atan2_last_check
@@ -281,8 +284,22 @@ sincos_q15_s3:
 // &tan - a5
     entry	a1, 16
 
+    l32r a13,.SAT_MAX_16
+    l32r a14,.SAT_MIN_16
+
+    l32r a11,.PLUS_PI
+    blt a2, a11,.sincos_n1
+    add.n a2,a2,a14 // >Pi
+    j .sincos_q34
+.sincos_n1:
+    l32r a11,.MINUS_PI
+    bge a2, a11,.sincos_n2
+    add.n a2,a2,a13 // <-Pi
+.sincos_n2:
+
     l32r a11,.PLUS_PI2
     bge a2, a11, .sincos_q2
+.sincos_q34:
     l32r a11,.MINUS_PI2
     blt a2, a11, .sincos_q3
     movi.n  a11, 0      // cor = 0              -> a11
@@ -551,6 +568,14 @@ sincos_q15_s3:
     neg a8,a8
 .sincos_end:
 
+    // saturate
+    //l32r a13,.SAT_MAX_16
+    min a8,a8,a13
+    min a6,a6,a13
+    //l32r a14,.SAT_MIN_16
+    max a8,a8,a14
+    max a6,a6,a14
+    
     s16i a8,a3,0 //cos
     s16i a6,a4,0 //sin
     retw.n

@@ -14,9 +14,14 @@ extern "C"
 {
 #endif
 
+#define M_PI 3.14159265358979323846
+
 typedef int16_t q15; ///< fixed point S.15
 #define toQ15(f) ((q15)(f*INT16_MAX))
 #define toFloat(q) ((((int16_t)q))/((float)INT16_MAX))
+
+#define toQ15Angle(f) ((q15)((f/(2*M_PI))*INT16_MAX))
+#define toFloatAngle(q) ((q/float(INT16_MAX))*2*M_PI)
 
 #define to8SIZE(size) ((((size)+7)/8)*8)
 
