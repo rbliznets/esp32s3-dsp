@@ -24,6 +24,7 @@ typedef int16_t q15; ///< fixed point S.15
 #define toFloatAngle(q) ((q/float(INT16_MAX))*2*M_PI)
 
 #define to8SIZE(size) ((((size)+7)/8)*8)
+#define to4SIZE(size) ((((size)+3)/4)*4)
 
 /// Copy vector.
 /*!

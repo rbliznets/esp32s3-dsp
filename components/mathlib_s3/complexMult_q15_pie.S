@@ -32,20 +32,12 @@ cmul10_q15_pie:
 
     EE.VLD.128.IP q0, a2, 16    // in1[0..3] -> q0
     EE.CMUL.S16 q2, q0, q1, 0 
-    //EE.CMUL.S16.LD.INCP q1, a2, q2, q0, q1, 1 // q2=q0*q1, in1[4..7] -> q0
-    EE.CMUL.S16 q2, q0, q1, 1 // q2=q0*q1, 
-    EE.VST.128.IP q2, a4, 16    // q2 -> out[0..3]
+    EE.CMUL.S16.LD.INCP q3, a2, q2, q0, q1, 1 // q2=q0*q1, in1[4..7] -> q3
 
-    EE.VLD.128.IP q0, a2, 16    // in1[4..7] -> q0
-    EE.CMUL.S16 q2, q0, q1, 0 
-     //EE.CMUL.S16.ST.INCP q2, a4, q2, q0, q1, 0 
-    //EE.CMUL.S16.LD.INCP q1, a2, q2, q0, q1, 1 // q2=q0*q1, in1[8..11] -> q0
-    EE.CMUL.S16 q2, q0, q1, 1 // q2=q0*q1, in1[8..11] -> q0
-    EE.VST.128.IP q2, a4, 16    // q2 -> out[4..7]
-
-    EE.VLD.128.IP q0, a2, 0    // in1[8..11] -> q0
-    EE.CMUL.S16 q2, q0, q1, 0 // q2=q0*q1
-    //EE.CMUL.S16.ST.INCP q2, a4, q2, q0, q1, 0 // q2=q0*q1
+    EE.CMUL.S16.ST.INCP q2, a4, q4, q3, q1, 0 
+    EE.CMUL.S16.LD.INCP q0, a2, q4, q3, q1, 1 // q4=q3*q1, in1[8..11] -> q0
+ 
+    EE.CMUL.S16.ST.INCP q4, a4, q2, q0, q1, 0 // q2=q0*q1
     EE.VST.L.64.IP q2, a4, 0   // q2 -> out[8 9]
 
     retw.n
