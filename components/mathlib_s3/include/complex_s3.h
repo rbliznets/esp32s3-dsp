@@ -63,6 +63,9 @@ complex_q15 cmul_q15(complex_q15 x, complex_q15 y);
 */
 void cmul10_q15(complex_q15* in, complex_q15* k, complex_q15* out);
 
+void init_fft(complex_q15* w, uint32_t fftSize);
+void fft_radix2(complex_q15* data, complex_q15* w, uint32_t fftSize);
+
 #ifdef __cplusplus
 }
 #endif

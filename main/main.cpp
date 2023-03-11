@@ -66,6 +66,9 @@ void test_fir();
 void test_complex();
 void test_sincos();
 
+__attribute__((aligned(16)))
+complex_q15 fft_w[TEST_SIZE];
+
 extern "C" void app_main(void)
 {
     esp_chip_info_t chip_info;
@@ -82,10 +85,13 @@ extern "C" void app_main(void)
 #endif 
     std::printf("\n");
 
-    test_copy();
-    test_scalevector();
-    test_dotproduct();
-    test_fir();
-    test_complex();
-    test_sincos();
+    // test_copy();
+    // test_scalevector();
+    // test_dotproduct();
+    // test_fir();
+    // test_complex();
+    // test_sincos();
+
+    init_fft(fft_w, TEST_SIZE);
+    fft_radix2(inc,fft_w,TEST_SIZE);
 }
